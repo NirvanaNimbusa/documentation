@@ -1,0 +1,266 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
+    - run: npm test
+            - name: Azure Resource Manager (ARM) Template Deployment
+  # You may pin to the exact commit or the version.
+  # uses: whiteducksoftware/azure-arm-action@9bae2e95df87dbd4acae11deb0765be7256fd141
+  uses: whiteducksoftware/azure-arm-action@v3.3
+  with:
+    # Paste output of `az ad sp create-for-rbac -o json` as value of secret variable: AZURE_CREDENTIALS
+    creds: 
+    # Provide the name of a resource group.
+    resourceGroupName: 
+    # Specify the path to the Azure Resource Manager template.
+    templateLocation: 
+    # Specifies the name of the resource group deployment to create.
+    deploymentName: 
+    # Incremental (only add resources to resource group) or Complete (remove extra resources from resource group).
+    deploymentMode: # optional, default is Incremental
+    # Specify either path to the Azure Resource Manager parameters file or pass them as 'key1=value1;key2=value2;...'.
+    parameters: # optional
+    # Specify either path to the Azure Resource Manager override parameters file or pass them as 'key1=value1;key2=value2;...'.
+    overrideParameters: # optional
+               - name: Algorithmia publish-algo
+  # You may pin to the exact commit or the version.
+  # uses: algorithmiaio/publish-algo-action@aca3c2325ce2dc66951f14a88c2caf0c64ea55c4
+  uses: algorithmiaio/publish-algo-action@v0.1.0-rc4
+  with:
+    # your Algorithmia Management API key
+    mgmt_api_key: 
+    # The API address for the Algorithmia Cluster you wish to connect to
+    api_address: # optional, default is https://api.algorithmia.com
+    # The name of this Algorithm on Algorithmia
+    algorithm_name: 
+    # identifier to describe how to promote this release
+    version_schema: # optional, default is minor
+              - name: Rainforest QA GitHub Action
+  # You may pin to the exact commit or the version.
+  # uses: rainforestapp/github-action@5855f2c2427c564554663926b143b9ce3bce17c8
+  uses: rainforestapp/github-action@v3.2.5
+  with:
+    # An arbitrary string to associate with the run
+    description: # optional, default is 
+    # Only run tests tied to this Run Group
+    run_group_id: 
+    # Use a specific environment for this run
+    environment_id: # optional, default is 
+    # Use a specific URL for this run
+    custom_url: # optional, default is 
+    # How other currently in-progress runs should be handled. Values are `cancel` to cancel runs in the same environment as your new run and `cancel-all` to cancel all runs
+    conflict: # optional, default is 
+    # The execution method to use for this run
+    execution_method: # optional, default is 
+    # DEPRECATED: Use `execution_method` instead
+    crowd: # optional, default is 
+    # Manually entered release information about the release the run is associated with
+    release: # optional, default is 
+    # If set to a value > 0 and a test fails, it will be retried within the same run, up to that number of times
+    automation_max_retries: # optional, default is 
+    # Use a specific Rainforest branch for this run
+    branch: # optional, default is 
+    # Your Rainforest QA API token
+    token: 
+    # Do not wait for a run to complete before exiting
+    background: # optional, default is 
+    # Set to true to run parameter validations without starting a new Rainforest run
+    dry_run: # optional, default is 
+    # The cache key to use for saving/restoring a Rainforest run ID (used to rerun failed tests)
+    cache_key: # optional, default is ${{ github.job }}-${{ github.action }}
+              - name: CN Terragrunt GitHub Actions
+  # You may pin to the exact commit or the version.
+  # uses: CloudNation-nl/cn-terragrunt-github-actions@157d7b2ada26510a0f7ea0180af89bc2cf9305e4
+  uses: CloudNation-nl/cn-terragrunt-github-actions@v0.0.16
+  with:
+    # Terraform or Terragrunt subcommand to execute.
+    tf_actions_subcommand: 
+    # Binary to use. Terraform or Terragrunt
+    tf_actions_binary: # optional, default is terragrunt
+    # Terraform version to install.
+    tf_actions_version: # default is latest
+    # Terragrunt version to install.
+    tg_actions_version: # default is latest
+    # Hostname for the CLI credentials file.
+    tf_actions_cli_credentials_hostname: # optional, default is app.terraform.io
+    # Token for the CLI credentials file.
+    tf_actions_cli_credentials_token: # optional
+    # Whether or not to comment on pull requests.
+    tf_actions_comment: # optional, default is true
+    # Terragrunt working directory.
+    tf_actions_working_dir: # optional, default is .
+    # Write Terragrunt fmt changes to source files.
+    tf_actions_fmt_write: # optional
+             - name: Algorithmia test-algo
+  # You may pin to the exact commit or the version.
+  # uses: algorithmiaio/test-algo-action@cbfe0b98066531ff84d2a367c733a25e09ab7b8d
+  uses: algorithmiaio/test-algo-action@v0.1.1-rc6
+  with:
+    # your typical Algorithmia API key
+    regular_api_key: 
+    # The API address for the Algorithmia Cluster you wish to connect to
+    api_address: # optional, default is https://api.algorithmia.com
+    # The name of the Algorithm you want to test
+    algorithm_name: 
+    # A list of Json Case objects that describe the desired test cases
+    cases: 
+             - name: Algorithmia publish-algo
+  # You may pin to the exact commit or the version.
+  # uses: algorithmiaio/publish-algo-action@aca3c2325ce2dc66951f14a88c2caf0c64ea55c4
+  uses: algorithmiaio/publish-algo-action@v0.1.0-rc4
+  with:
+    # your Algorithmia Management API key
+    mgmt_api_key: 
+    # The API address for the Algorithmia Cluster you wish to connect to
+    api_address: # optional, default is https://api.algorithmia.com
+    # The name of this Algorithm on Algorithmia
+    algorithm_name: 
+    # identifier to describe how to promote this release
+    version_schema: # optional, default is minor
+               - name: Create the default Container Tags for the GlueOps Platform
+  # You may pin to the exact commit or the version.
+  # uses: GlueOps/github-actions-create-container-tags@6af52f5934041f1d7ac04b184218045ddaafe6b4
+  uses: GlueOps/github-actions-create-container-tags@v0.2.0
+             - name: Authorize Commit Signing
+  # You may pin to the exact commit or the version.
+  # uses: gobeyondidentity/auth-commit-sig@6db65836b90626777616f62faa2b33a9e8b836da
+  uses: gobeyondidentity/auth-commit-sig@v1.0.0
+  with:
+    # API token for the Beyond Identity key management API. Should be stored as a secret in your repository, and referenced as, e.g.
+
+    api_token: {{ secrets.BYNDID_KEY_MGMT_API_TOKEN }}
+
+    api_token: 
+    # The repository which the signature verification action is performed on. This  is also used to match against the repositories listed on the allowlist.
+
+    repository: 
+    # The commit reference to check. Defaults to HEAD, which will be the ref checked out by `actions/checkout`.
+
+    ref: # optional, default is HEAD
+    # The file path where the allowlist config file is stored. See README on  how to configure and fetch allowlist.
+
+    allowlist_config_file_path: # optional
+              - name: driftctl-action
+  # You may pin to the exact commit or the version.
+  # uses: snyk/driftctl-action@7450dbe454e717693c2e5bb0f6f11afd4e5535e1
+  uses: snyk/driftctl-action@v1.3.0
+  with:
+    # The version of driftctl to install.
+    version: # optional, default is latest
+    # Additional args to supply to scan
+    args: # optional, default is 
+             - name: Sync Templates
+  # You may pin to the exact commit or the version.
+  # uses: fiberplane/sync-templates@e35786a91f4d6ec8f9b4df0ccfa66770cff78083
+  uses: fiberplane/sync-templates@v1
+  with:
+    # API token used to access the Fiberplane API with
+    api-token: 
+    # ID of the workspace to which the templates should be uploaded to
+    workspace-id: 
+    # Base URL of the Fiberplane API
+    fp-base-url: # optional, default is https://studio.fiberplane.com
+    # Custom directory that should be monitored for Template JSONNET files (default: .fiberplane/templates/)
+    templates-directory: # optional, default is .fiberplane/templates/
+    # Version of the Fiberplane CLI to use (latest by default)
+    fp-version: # optional, default is latest
+             - name: Cloud Maker Deploy
+  # You may pin to the exact commit or the version.
+  # uses: cloud-maker-ai/github-action-deploy@f86239fb28b589a9898a361b3df1dac5f3d3fc8f
+  uses: cloud-maker-ai/github-action-deploy@v1.0.1
+  with:
+    # Cloud Maker API Token
+    CLOUD_MAKER_TOKEN: 
+    # Cloud Maker Pipeline ID to be deployed
+    CLOUD_MAKER_PIPELINE_ID: 
+    # Cloud Maker Stage ID to be deployed
+    CLOUD_MAKER_STAGE_ID: 
+            - name: Install Zoo CLI
+  # You may pin to the exact commit or the version.
+  # uses: KittyCAD/action-install-cli@e339db10b79bc1776ea6babd0169c153ff2b8596
+            - name: GitHub Action for Extracting Atmos Settings
+  # You may pin to the exact commit or the version.
+  # uses: cloudposse/github-action-atmos-get-setting@1ce5ff958407d28d6a4196d39ec96970a6ddfa6a
+  uses: cloudposse/github-action-atmos-get-setting@1.2.1
+  with:
+    # The atmos component extract the settings for.
+    component: # optional
+    # The atmos stack extract the settings for.
+    stack: # optional
+    # The settings path using JSONPath expressions.
+    settings-path: # optional
+    # The settings to extract.
+    settings: # optional
+            uses: KittyCAD/action-install-cli@v0.2.21
+               - name: Quality Clouds Build Check for Salesforce
+  # You may pin to the exact commit or the version.
+  # uses: qualityclouds/action-full-scan@4bc13bbfa27d8eaa0bc4978ac161d148a6f70ac4
+  uses: qualityclouds/action-full-scan@1.0.1
+  with:
+    # You need to provide a valid API key to connect the Quality Clouds ruleset against which your code will be checked
+    token: 
+    # Use cloud mode to runh a Feature branch scan
+    mode: # optional
+    # The instance Id. Required when cloud mode is enabled.
+    url_id: # optional
+    # Use cloud mode to runh a Feature branch scan
+    api_url: # optional
+    # Customize runner version
+            - name: Setup Buildless
+  # You may pin to the exact commit or the version.
+  # uses: buildless/setup@30e82389418c7f17046606183bc4c78b2c8913e0
+  uses: buildless/setup@v1.0.2
+  with:
+    # Version
+    version: # optional, default is latest
+    # OS
+    os: # optional
+    # Architecture
+    arch: # optional
+    # Custom install path
+    target: # optional
+    # Force install
+    force: # optional
+    # Export to Path
+    export_path: # optional, default is true
+    # Custom Download URL
+    custom_url: # optional
+    # GitHub Token
+    token: # optional, default is ${{ github.token }}
+    # Enable Buildless Agent
+    agent: # optional, default is true
+    # Buildless API key
+    apikey: # optional
+    # Buildless Tenant
+    tenant: # optional
+    # Buildless Project
+    project: # optional
+               version: # optional
+               
+                                                                                                              
